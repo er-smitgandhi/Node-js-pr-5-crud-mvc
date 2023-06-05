@@ -1,0 +1,101 @@
+<h1 style="text-align: center;text-decoration: underline;">Movie Details</h1>
+
+<form method="post" action="/insertData" style="text-align: center;" enctype="multipart/form-data">
+    <input type="hidden" name="editid" value="<%= single.id %>">
+    <table border="1" align="center" width="500">
+        <tr>
+            <th>Movie Name :</th>
+            <td><input type="text" name="name" value="<%= single.name %>" style="width: 100%;"></td>
+        </tr>
+        <tr>
+            <th>Director :</th>
+            <td><input type="text" name="director" value="<%= single.director %>"  style="width: 100%;"></td>
+        </tr>
+        <tr>
+            <th>Writer :</th>
+            <td><input type="text" name="writer" value="<%= single.writer %>" style="width: 100%;"></td>
+        </tr>
+        <tr>
+            <th>Actors :</th>
+            <td><input type="text" name="actor" value="<%= single.actor %>" style="width: 100%;"></td>
+        </tr>
+        <tr>
+            <th>Language :</th>
+            <td>
+                <input type="checkbox" <% if(single.language) { if(single.language.includes('hindi')) {%> checked <% }} %> value="hindi" name="language">Hindi
+                <input type="checkbox" <% if(single.language) {if(single.language.includes('english')) {%> checked <% }} %> value="english" name="language">English
+                <input type="checkbox" <% if(single.language) {if(single.language.includes('gujarati')) {%> checked <% }} %> value="gujarati" name="language">Gujarati
+            </td>
+        </tr>
+        <tr>
+            <th>Country :</th>
+            <td><input type="text" name="country" value="<%= single.actor %>" style="width: 100%;"></td>
+        </tr>
+        <tr>
+            <th>Movie Type :</th>
+            <td>
+                <select name="movietype">
+                    <option value="">--- Select Movie Type ---</option>
+                    <% let movietype = ["Action","Drama","Romantic","Comedy"]
+                        for(let i in movietype){ %>
+                            <option <% if(single.movietype == movietype[i]){ %> selected <% } %> value="<%= movietype[i] %>"><%= movietype[i] %></option>
+                    <% } %>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <th>Image Upload</th>
+            <td>
+                <input type="file" name="image">
+                <% if(single){ %>
+                    <img src="<%= single.image %>" width="200">
+                <% } %>
+            </td>
+        </tr>
+        <tr>
+            <th></th>
+            <th>
+                <% if(single){ %>
+                    <input type="submit" value="edit">
+                <% } else{ %>
+                    <input type="submit">
+                <% } %>
+            </th>
+        </tr>
+    </table>   
+</form>
+<hr>
+<table border="1" align="center" style="text-align: center;">
+    <tr>
+        <th>Movie Name</th>
+        <th>Director</th>
+        <th>Writer</th>
+        <th>Actors</th>
+        <th>Language</th>
+        <th>Country</th>
+        <th>Movie Type</th>
+        <th>Movie Image</th>
+        <th>Action</th>
+    </tr>
+
+    <% user.map((val)=>{ 
+        const {id,name,director,writer,actor,language,country,movietype,image} = val
+        %>
+        <tr>
+            <td><%=name%></td>
+            <td><%=director%></td>
+            <td><%=writer%></td>
+            <td><%=actor%></td>
+            <td><%=language%></td>
+            <td><%=country%></td>
+            <td><%=movietype%></td>
+            <td>
+                <img src="<%= image %>" width="100">
+            </td>
+            <td>
+                <a href="/deletedata?id=<%= id %>">Delete</a> ||
+                <a href="/editdata?id=<%= id %>">Edit</a>
+            </td>
+        </tr>
+    <% }) %>
+</table>
