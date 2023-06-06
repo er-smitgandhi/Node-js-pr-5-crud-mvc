@@ -31,7 +31,7 @@ const addData = async (req, res) => {
                     console.log("Fill The Data");
                     return res.redirect('back');
                 }
-                let deletedata = await crudtbl.findByIdAndDelete(editid);
+                let deletedata = await crudtbl.findById(editid);
                 if (deletedata) {
                     fs.unlinkSync(deletedata.image);
                 }
